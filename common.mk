@@ -45,5 +45,5 @@ else
 	$(error FUTEX_IMPL was invalid. Valid options: linux.)
 endif
 
-INCLUDES = -I./include
+INCLUDES = -I./include -I./src
 OBJ_OUT = $(patsubst %, build/%, $(OBJ))

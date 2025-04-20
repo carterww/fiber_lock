@@ -4,8 +4,9 @@
 #define FIBER_LOCK_MUTEX_H
 
 #if defined(FIBER_LOCK_MUTEX_POSIX)
-#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 199506L
 #include <pthread.h>
+#include <unistd.h>
+#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 199506L
 typedef pthread_mutex_t fiber_mutex;
 #else
 #error "FIBER_LOCK_MUTEX_POSIX was specified but _POSIX_VERSION does not indicate mutex support."
@@ -19,9 +20,9 @@ typedef void fiber_mutex;
  * If it is called on an initialized mutex, it may fail depending on the implementation.
  * @param mut -> Pointer to the fiber_mutex to initialize.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @error FBR_ENO_RSC -> The system did not have resources to initialize the mutex.
- * @error FBR_EPTHRD_PERM -> The process does not have permission to initialize a mutex.
- * @error FBR_ENOMEM -> The system did not have sufficient memory to initialize the mutex.
+ * @error FBR_LOCK_ENO_RSC -> The system did not have resources to initialize the mutex.
+ * @error FBR_LOCK_EPTHRD_PERM -> The process does not have permission to initialize a mutex.
+ * @error FBR_LOCK_ENOMEM -> The system did not have sufficient memory to initialize the mutex.
  */
 int fiber_mutex_init(fiber_mutex *mut);
 
@@ -29,8 +30,7 @@ int fiber_mutex_init(fiber_mutex *mut);
  * or locked mutex. Both cases will result in undefined behavior.
  * @param mut -> Pointer to the fiber_mutex to destroy.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @note As of now, there are no error codes returned by this function. All error cases
- * indicate a bug so we panic.
+ * @error FBR_LOCK_EBUSY -> Tried to destroy a locked mutex.
  */
 int fiber_mutex_destroy(fiber_mutex *mut);
 

@@ -4,8 +4,9 @@
 #define FIBER_LOCK_SEMAPHORE_H
 
 #if defined(FIBER_LOCK_SEMAPHORE_POSIX)
-#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 199309L
 #include <semaphore.h>
+#include <unistd.h>
+#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 199309L
 typedef sem_t fiber_semaphore;
 #else
 #error "FIBER_LOCK_SEMAPHORE_POSIX was specified but _POSIX_VERSION does not indicate semaphore support."
@@ -20,7 +21,7 @@ typedef void fiber_semaphore;
  * @param sem -> Pointer to the fiber_semaphore to initialize.
  * @param initial_value -> The initial value of the semaphore.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @error FBR_ESEM_RNG -> initial_value was greater than the maximum semaphore value.
+ * @error FBR_LOCK_ESEM_RNG -> initial_value was greater than the maximum semaphore value.
  */
 int fiber_sem_init(fiber_semaphore *sem, unsigned int initial_value);
 
@@ -38,7 +39,7 @@ int fiber_sem_destroy(fiber_semaphore *sem);
  * the function blocks until other thread(s) call fiber_sem_post.
  * @param sem -> Pointer to the fiber_semaphore to wait on.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @error FBR_EINTR -> An internal fiber error code that indicates the call was interrupted
+ * @error FBR_LOCK_EINTR -> An internal fiber error code that indicates the call was interrupted
  * by something (most likely a signal handler). The caller should retry if this is returned.
  */
 int fiber_sem_wait(fiber_semaphore *sem);
@@ -48,9 +49,9 @@ int fiber_sem_wait(fiber_semaphore *sem);
  * the semaphore is <= 0, the function returns immediately with an error code.
  * @param sem -> Pointer to the fiber_semaphore to wait on.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @error FBR_EINTR -> An internal fiber error code that indicates the call was interrupted
+ * @error FBR_LOCK_EINTR -> An internal fiber error code that indicates the call was interrupted
  * by something (most likely a signal handler). The caller should retry if this is returned.
- * @error FBR_EAGAIN -> An internal fiber error code that indicates the value of the semaphore
+ * @error FBR_LOCK_EAGAIN -> An internal fiber error code that indicates the value of the semaphore
  * was <= 0 and could not be acquired.
  */
 int fiber_sem_trywait(fiber_semaphore *sem);
@@ -59,8 +60,7 @@ int fiber_sem_trywait(fiber_semaphore *sem);
  * fiber_sem_wait.
  * @param sem -> Pointer to the fiber_semaphore to post.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @note As of now, there are no error codes returned by this function. All error cases
- * indicate a bug so we panic.
+ * @error FBR_LOCK_ESEM_RNG -> Posting the semaphore would cause an overflow.
  */
 int fiber_sem_post(fiber_semaphore *sem);
 

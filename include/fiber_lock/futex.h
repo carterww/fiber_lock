@@ -37,7 +37,7 @@ void fiber_futex_init(fiber_futex *futex, int value);
  * should block.
  * @returns -> 0 if the thread was woken up by fiber_futex_wake, an
  * error otherwise.
- * @error FBR_EAGAIN -> The futex's value did not match expected.
+ * @error FBR_LOCK_EAGAIN -> The futex's value did not match expected.
  */
 int fiber_futex_wait(fiber_futex *futex, int expected);
 
@@ -47,8 +47,8 @@ int fiber_futex_wait(fiber_futex *futex, int expected);
  * should block.
  * @returns -> 0 if the thread was woken up by fiber_futex_wake, an
  * error otherwise.
- * @error FBR_EAGAIN -> The futex's value did not match expected.
- * @error FBR_ETIMEDOUT -> The timeout was reached.
+ * @error FBR_LOCK_EAGAIN -> The futex's value did not match expected.
+ * @error FBR_LOCK_ETIMEDOUT -> The timeout was reached.
  */
 int fiber_futex_wait_timeout(fiber_futex *futex, int expected,
 			     unsigned long timeout_ms);
@@ -59,7 +59,7 @@ int fiber_futex_wait_timeout(fiber_futex *futex, int expected,
  * If an error isn't returned, the actual number of threads woken up is put
  * into this variable.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @error FBR_EINVAL -> *num_threads is not a positive integer.
+ * @error FBR_LOCK_EINVAL -> *num_threads is not a positive integer.
  */
 int fiber_futex_wake(fiber_futex *futex, int *num_threads);
 

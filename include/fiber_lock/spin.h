@@ -4,8 +4,10 @@
 #define FIBER_LOCK_SPIN_H
 
 #if defined(FIBER_LOCK_SPIN_POSIX)
-#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 200112L
+#define _POSIX_C_SOURCE (200112L)
 #include <pthread.h>
+#include <unistd.h>
+#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 200112L
 typedef pthread_spinlock_t fiber_spinlock;
 #else
 #error "FIBER_LOCK_SPIN_POSIX was specified but _POSIX_VERSION does not indicate spinlock support."
@@ -19,8 +21,8 @@ typedef void fiber_spinlock;
  * results in undefined behavior.
  * @param spin -> Pointer to the fiber_spinlock to initialize.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @error FBR_EAGAIN -> Insufficient resources to create the spinlock.
- * @error FBR_ENOMEM -> Insufficient memory to create the spinlock.
+ * @error FBR_LOCK_EAGAIN -> Insufficient resources to create the spinlock.
+ * @error FBR_LOCK_ENOMEM -> Insufficient memory to create the spinlock.
  */
 int fiber_spin_init(fiber_spinlock *spin);
 
@@ -46,7 +48,7 @@ int fiber_spin_lock(fiber_spinlock *spin);
  * undefined behavior.
  * @param spin -> Pointer to the fiber_spinlock to lock.
  * @returns -> 0 if the call was successful, an error otherwise.
- * @error FBR_EBUSY -> Another thread currently holds the spinlock.
+ * @error FBR_LOCK_EBUSY -> Another thread currently holds the spinlock.
  */
 int fiber_spin_trylock(fiber_spinlock *spin);
 
