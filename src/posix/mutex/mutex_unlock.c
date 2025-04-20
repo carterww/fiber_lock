@@ -14,12 +14,12 @@ int fiber_mutex_unlock(fiber_mutex *mut)
 	fiber_assert(mut != NULL);
 	res = pthread_mutex_unlock(mut);
 
-        /* Invalid mutex */
+	/* Invalid mutex */
 	fiber_assert(res != EINVAL);
 	/* Max number of recursive locks exceeded */
 	fiber_assert(res != EAGAIN);
-        /* Caller does not own the mutex */
-        fiber_assert(res != EPERM);
+	/* Caller does not own the mutex */
+	fiber_assert(res != EPERM);
 
 	switch (res) {
 	case 0:

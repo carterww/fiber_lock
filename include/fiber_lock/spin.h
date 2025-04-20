@@ -4,7 +4,6 @@
 #define FIBER_LOCK_SPIN_H
 
 #if defined(FIBER_LOCK_SPIN_POSIX)
-#define _POSIX_C_SOURCE (200112L)
 #include <pthread.h>
 #include <unistd.h>
 #if defined(_POSIX_VERSION) && _POSIX_VERSION >= 200112L

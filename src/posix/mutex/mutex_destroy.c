@@ -23,7 +23,7 @@ int fiber_mutex_destroy(fiber_mutex *mut)
 	case 0:
 		return res;
 	case EBUSY: /* Trying to destroy a locked mutex */
-                return FBR_LOCK_EBUSY;
+		return FBR_LOCK_EBUSY;
 	default:
 		panic(1);
 	}
