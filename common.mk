@@ -51,5 +51,5 @@ else
 	$(error FUTEX_IMPL was invalid. Valid options: linux.)
 endif
 
-INCLUDES = -I./include -I./src -I./deps
+INCLUDES = -I./include -I./src -I./deps/fiber_atomic/include
 OBJ_OUT = $(patsubst %, build/%, $(OBJ))
