@@ -37,7 +37,13 @@ endif
 
 ifeq ($(FUTEX_IMPL),linux)
 	C_CONFIG_FLAGS+=-D"FIBER_LOCK_FUTEX_LINUX"
-	OBJ+=linux/futex/futex_init.o
+	OBJ+=linux/futex/futex_syscall.o
+	OBJ+=linux/futex/futex_load.o
+	OBJ+=linux/futex/futex_set.o
+	OBJ+=linux/futex/futex_add.o
+	OBJ+=linux/futex/futex_sub.o
+	OBJ+=linux/futex/futex_exchange.o
+	OBJ+=linux/futex/futex_cmp_xchng.o
 	OBJ+=linux/futex/futex_wait.o
 	OBJ+=linux/futex/futex_wait_timeout.o
 	OBJ+=linux/futex/futex_wake.o
@@ -45,5 +51,5 @@ else
 	$(error FUTEX_IMPL was invalid. Valid options: linux.)
 endif
 
-INCLUDES = -I./include -I./src
+INCLUDES = -I./include -I./src -I./deps
 OBJ_OUT = $(patsubst %, build/%, $(OBJ))

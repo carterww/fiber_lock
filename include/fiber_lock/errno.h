@@ -11,5 +11,7 @@
 #define FBR_LOCK_EAGAIN (-6)
 #define FBR_LOCK_EINTR (-7)
 #define FBR_LOCK_EDEADLK (-8)
+#define FBR_LOCK_ETIMEDOUT (-9)
+#define FBR_LOCK_EINVAL (-10)
 
 #endif /* FIBER_LOCK_ERRNO_H */
