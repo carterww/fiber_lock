@@ -2,9 +2,9 @@
 
 #include <stdint.h>
 #include <time.h>
+#include <unistd.h>
 
 #include <sys/syscall.h>
-#include <unistd.h>
 
 long _fiber_lock_futex_syscall_linux_timeout(uint32_t *futex1, uint32_t *futex2,
 					     int futex_op, uint32_t value1,
