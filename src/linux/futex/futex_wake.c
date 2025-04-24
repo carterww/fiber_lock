@@ -9,6 +9,10 @@
 #include "fiber_lock/errno.h"
 #include "fiber_lock/futex.h"
 
+#if defined(FIBER_LOCK_FUTEX_INTERCEPT)
+#define fiber_futex_wake _fiber_futex_wake
+#endif
+
 int fiber_futex_wake(fiber_futex *futex, int *num_threads)
 {
 	long num_woken;
@@ -25,5 +29,11 @@ int fiber_futex_wake(fiber_futex *futex, int *num_threads)
 
 	fiber_assert(num_woken >= 0 && num_woken <= INT_MAX);
 
-	return (int)num_woken;
+	*num_threads = (int)num_woken;
+	return 0;
 }
+
+#if defined(FIBER_LOCK_FUTEX_INTERCEPT)
+#undef fiber_futex_wake
+int (*fiber_futex_wake_fn_ptr)(fiber_futex *, int *) = _fiber_futex_wake;
+#endif

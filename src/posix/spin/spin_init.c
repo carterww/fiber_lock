@@ -28,3 +28,8 @@ int fiber_spin_init(fiber_spinlock *spin)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_SPIN_INTERCEPT)
+#undef fiber_spin_init
+int (*fiber_spin_init_fn_ptr)(fiber_spinlock *) = _fiber_spin_init;
+#endif

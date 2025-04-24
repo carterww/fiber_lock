@@ -28,3 +28,9 @@ int fiber_sem_getvalue(fiber_semaphore *sem, int *value_out)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_SEMAPHORE_INTERCEPT)
+#undef fiber_sem_getvalue
+int (*fiber_sem_getvalue_fn_ptr)(fiber_semaphore *,
+				 int *) = _fiber_sem_getvalue;
+#endif

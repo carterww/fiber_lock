@@ -28,3 +28,8 @@ int fiber_mutex_destroy(fiber_mutex *mut)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_MUTEX_INTERCEPT)
+#undef fiber_mutex_destroy
+int (*fiber_mutex_destroy_fn_ptr)(fiber_mutex *) = _fiber_mutex_destroy;
+#endif

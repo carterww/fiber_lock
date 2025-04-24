@@ -1,13 +1,17 @@
 #include "futex_syscall.h"
 
 #include <errno.h>
+#include <stdint.h>
 
 #include <linux/futex.h>
-#include <stdint.h>
 
 #include "debug.h"
 #include "fiber_lock/errno.h"
 #include "fiber_lock/futex.h"
+
+#if defined(FIBER_LOCK_FUTEX_INTERCEPT)
+#define fiber_futex_wait _fiber_futex_wait
+#endif
 
 int fiber_futex_wait(fiber_futex *futex, int expected)
 {
@@ -36,3 +40,8 @@ int fiber_futex_wait(fiber_futex *futex, int expected)
 	fiber_assert(errno != ETIMEDOUT);
 	panic(1);
 }
+
+#if defined(FIBER_LOCK_FUTEX_INTERCEPT)
+#undef fiber_futex_wait
+int (*fiber_futex_wait_fn_ptr)(fiber_futex *, int) = _fiber_futex_wait;
+#endif

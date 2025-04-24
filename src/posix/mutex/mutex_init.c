@@ -17,7 +17,7 @@ int fiber_mutex_init(fiber_mutex *mut)
 	fiber_assert(mut != NULL);
 	res = pthread_mutex_init(mut, NULL);
 
-	fiber_assert(res != EINVAL); /* This only occurs is attr is invalid */
+	fiber_assert(res != EINVAL); /* This only occurs if attr is invalid */
 	fiber_assert(res != EBUSY); /* Attempted to reinitialize a mutex */
 
 	switch (res) {
@@ -33,3 +33,8 @@ int fiber_mutex_init(fiber_mutex *mut)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_MUTEX_INTERCEPT)
+#undef fiber_mutex_init
+int (*fiber_mutex_init_fn_ptr)(fiber_mutex *) = _fiber_mutex_init;
+#endif

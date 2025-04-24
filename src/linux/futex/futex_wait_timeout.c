@@ -33,6 +33,10 @@ static void timespec_diff(struct timespec *tout, struct timespec *start,
 	tout->tv_nsec = rem_ns;
 }
 
+#if defined(FIBER_LOCK_FUTEX_INTERCEPT)
+#define fiber_futex_wait_timeout _fiber_futex_wait_timeout
+#endif
+
 int fiber_futex_wait_timeout(fiber_futex *futex, int expected,
 			     unsigned long timeout_ms)
 {
@@ -80,3 +84,9 @@ int fiber_futex_wait_timeout(fiber_futex *futex, int expected,
 	fiber_assert(errno != EINVAL);
 	panic(1);
 }
+
+#if defined(FIBER_LOCK_FUTEX_INTERCEPT)
+#undef fiber_futex_wait_timeout
+int (*fiber_futex_wait_timeout_fn_ptr)(fiber_futex *, int, unsigned long) =
+	_fiber_futex_wait_timeout;
+#endif

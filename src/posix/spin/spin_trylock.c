@@ -26,3 +26,8 @@ int fiber_spin_trylock(fiber_spinlock *spin)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_SPIN_INTERCEPT)
+#undef fiber_spin_trylock
+int (*fiber_spin_trylock_fn_ptr)(fiber_spinlock *) = _fiber_spin_trylock;
+#endif

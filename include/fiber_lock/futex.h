@@ -105,4 +105,17 @@ int fiber_futex_wait_timeout(fiber_futex *futex, int expected,
  */
 int fiber_futex_wake(fiber_futex *futex, int *num_threads);
 
+#if defined(FIBER_LOCK_FUTEX_INTERCEPT)
+extern int (*fiber_futex_load_fn_ptr)(fiber_futex *);
+extern void (*fiber_futex_set_fn_ptr)(fiber_futex *, int);
+extern int (*fiber_futex_add_fn_ptr)(fiber_futex *, int);
+extern int (*fiber_futex_sub_fn_ptr)(fiber_futex *, int);
+extern int (*fiber_futex_exchange_fn_ptr)(fiber_futex *, int);
+extern int (*fiber_futex_cmp_xchng_fn_ptr)(fiber_futex *, int *, int, int);
+extern int (*fiber_futex_wait_fn_ptr)(fiber_futex *, int);
+extern int (*fiber_futex_wait_timeout_fn_ptr)(fiber_futex *, int,
+					      unsigned long);
+extern int (*fiber_futex_wake_fn_ptr)(fiber_futex *, int *);
+#endif
+
 #endif /* FIBER_LOCK_FUTEX_H */

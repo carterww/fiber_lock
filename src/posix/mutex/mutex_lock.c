@@ -30,3 +30,8 @@ int fiber_mutex_lock(fiber_mutex *mut)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_MUTEX_INTERCEPT)
+#undef fiber_mutex_lock
+int (*fiber_mutex_lock_fn_ptr)(fiber_mutex *) = _fiber_mutex_lock;
+#endif

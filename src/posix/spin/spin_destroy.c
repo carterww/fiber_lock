@@ -18,3 +18,8 @@ int fiber_spin_destroy(fiber_spinlock *spin)
 
 	return res;
 }
+
+#if defined(FIBER_LOCK_SPIN_INTERCEPT)
+#undef fiber_spin_destroy
+int (*fiber_spin_destroy_fn_ptr)(fiber_spinlock *) = _fiber_spin_destroy;
+#endif

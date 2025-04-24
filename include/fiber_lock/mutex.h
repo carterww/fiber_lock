@@ -52,4 +52,11 @@ int fiber_mutex_lock(fiber_mutex *mut);
  */
 int fiber_mutex_unlock(fiber_mutex *mut);
 
+#if defined(FIBER_LOCK_MUTEX_INTERCEPT)
+extern int (*fiber_mutex_init_fn_ptr)(fiber_mutex *);
+extern int (*fiber_mutex_destroy_fn_ptr)(fiber_mutex *);
+extern int (*fiber_mutex_lock_fn_ptr)(fiber_mutex *);
+extern int (*fiber_mutex_unlock_fn_ptr)(fiber_mutex *);
+#endif
+
 #endif /* FIBER_LOCK_MUTEX_H */

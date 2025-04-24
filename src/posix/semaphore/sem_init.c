@@ -33,3 +33,8 @@ int fiber_sem_init(fiber_semaphore *sem, unsigned int initial_value)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_SEMAPHORE_INTERCEPT)
+#undef fiber_sem_init
+int (*fiber_sem_init_fn_ptr)(fiber_semaphore *, unsigned int) = _fiber_sem_init;
+#endif

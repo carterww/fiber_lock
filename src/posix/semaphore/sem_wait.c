@@ -30,3 +30,8 @@ int fiber_sem_wait(fiber_semaphore *sem)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_SEMAPHORE_INTERCEPT)
+#undef fiber_sem_wait
+int (*fiber_sem_wait_fn_ptr)(fiber_semaphore *) = _fiber_sem_wait;
+#endif

@@ -17,3 +17,8 @@ int fiber_spin_unlock(fiber_spinlock *spin)
 	fiber_assert(res == 0);
 	return res;
 }
+
+#if defined(FIBER_LOCK_SPIN_INTERCEPT)
+#undef fiber_spin_unlock
+int (*fiber_spin_unlock_fn_ptr)(fiber_spinlock *) = _fiber_spin_unlock;
+#endif

@@ -77,4 +77,13 @@ int fiber_sem_post(fiber_semaphore *sem);
  */
 int fiber_sem_getvalue(fiber_semaphore *sem, int *value_out);
 
+#if defined(FIBER_LOCK_SEMAPHORE_INTERCEPT)
+extern int (*fiber_sem_init_fn_ptr)(fiber_semaphore *, unsigned int);
+extern int (*fiber_sem_destroy_fn_ptr)(fiber_semaphore *);
+extern int (*fiber_sem_wait_fn_ptr)(fiber_semaphore *);
+extern int (*fiber_sem_trywait_fn_ptr)(fiber_semaphore *);
+extern int (*fiber_sem_post_fn_ptr)(fiber_semaphore *);
+extern int (*fiber_sem_getvalue_fn_ptr)(fiber_semaphore *, int *);
+#endif
+
 #endif /* FIBER_LOCK_SEMAPHORE_H */

@@ -1,5 +1,7 @@
 #define _POSIX_C_SOURCE (199506L)
 
+#include <errno.h>
+
 #include "debug.h"
 #include "fiber_lock/mutex.h"
 
@@ -28,3 +30,8 @@ int fiber_mutex_unlock(fiber_mutex *mut)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_MUTEX_INTERCEPT)
+#undef fiber_mutex_unlock
+int (*fiber_mutex_unlock_fn_ptr)(fiber_mutex *) = _fiber_mutex_unlock;
+#endif

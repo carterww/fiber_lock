@@ -59,4 +59,12 @@ int fiber_spin_trylock(fiber_spinlock *spin);
  */
 int fiber_spin_unlock(fiber_spinlock *spin);
 
+#if defined(FIBER_LOCK_SPIN_INTERCEPT)
+extern int (*fiber_spin_init_fn_ptr)(fiber_spinlock *);
+extern int (*fiber_spin_destroy_fn_ptr)(fiber_spinlock *);
+extern int (*fiber_spin_lock_fn_ptr)(fiber_spinlock *);
+extern int (*fiber_spin_trylock_fn_ptr)(fiber_spinlock *);
+extern int (*fiber_spin_unlock_fn_ptr)(fiber_spinlock *);
+#endif
+
 #endif /* FIBER_LOCK_SPIN_H */

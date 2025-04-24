@@ -27,3 +27,8 @@ int fiber_sem_destroy(fiber_semaphore *sem)
 		panic(1);
 	}
 }
+
+#if defined(FIBER_LOCK_SEMAPHORE_INTERCEPT)
+#undef fiber_sem_destroy
+int (*fiber_sem_destroy_fn_ptr)(fiber_semaphore *) = _fiber_sem_destroy;
+#endif
