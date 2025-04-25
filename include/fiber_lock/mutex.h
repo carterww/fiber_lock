@@ -6,11 +6,7 @@
 #if defined(FIBER_LOCK_MUTEX_POSIX)
 #include <pthread.h>
 #include <unistd.h>
-#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 199506L
 typedef pthread_mutex_t fiber_mutex;
-#else
-#error "FIBER_LOCK_MUTEX_POSIX was specified but _POSIX_VERSION does not indicate mutex support."
-#endif /* _POSIX_VERSION */
 #else
 #error "No mutex implementation specified."
 typedef void fiber_mutex;

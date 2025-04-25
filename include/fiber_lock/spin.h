@@ -6,11 +6,7 @@
 #if defined(FIBER_LOCK_SPIN_POSIX)
 #include <pthread.h>
 #include <unistd.h>
-#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 200112L
 typedef pthread_spinlock_t fiber_spinlock;
-#else
-#error "FIBER_LOCK_SPIN_POSIX was specified but _POSIX_VERSION does not indicate spinlock support."
-#endif /* _POSIX_VERSION */
 #else
 #error "No spinlock implementation specified."
 typedef void fiber_spinlock;

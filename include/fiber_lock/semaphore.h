@@ -6,11 +6,7 @@
 #if defined(FIBER_LOCK_SEMAPHORE_POSIX)
 #include <semaphore.h>
 #include <unistd.h>
-#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 199309L
 typedef sem_t fiber_semaphore;
-#else
-#error "FIBER_LOCK_SEMAPHORE_POSIX was specified but _POSIX_VERSION does not indicate semaphore support."
-#endif /* _POSIX_VERSION */
 #else
 #error "No semaphore implementation specified."
 typedef void fiber_semaphore;
