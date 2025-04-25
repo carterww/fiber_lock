@@ -76,12 +76,8 @@ endif
 # Set atomic ops implementation for fiber_atomic header(s)
 ifeq ($(ATOMIC_OPERATIONS_IMPL),gcc)
 C_CONFIG_FLAGS+=-D"FIBER_ATOMIC_OPERATIONS_IMPL_GCC"
-# __atomic builtin operations require the _Bool type
-C_STD_FLAG=-std=c99
 else ifeq ($(ATOMIC_OPERATIONS_IMPL),clang)
 C_CONFIG_FLAGS+=-D"FIBER_ATOMIC_OPERATIONS_IMPL_CLANG"
-# __atomic builtin operations require the _Bool type
-C_STD_FLAG=-std=c99
 else
 $(error ATOMIC_OPERATIONS_IMPL in config.mk was invalid)
 endif
