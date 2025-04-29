@@ -23,6 +23,7 @@ OBJ+=posix/mutex/mutex_init.o
 OBJ+=posix/mutex/mutex_destroy.o
 OBJ+=posix/mutex/mutex_lock.o
 OBJ+=posix/mutex/mutex_unlock.o
+else ifeq ($(MUTEX_IMPL),none)
 else
 $(error MUTEX_IMPL was invalid. Valid options: posix.)
 endif
@@ -35,6 +36,7 @@ OBJ+=posix/semaphore/sem_wait.o
 OBJ+=posix/semaphore/sem_trywait.o
 OBJ+=posix/semaphore/sem_post.o
 OBJ+=posix/semaphore/sem_getvalue.o
+else ifeq ($(SEMAPHORE_IMPL),none)
 else
 $(error SEMAPHORE_IMPL was invalid. Valid options: posix.)
 endif
@@ -46,6 +48,7 @@ OBJ+=posix/spin/spin_destroy.o
 OBJ+=posix/spin/spin_lock.o
 OBJ+=posix/spin/spin_trylock.o
 OBJ+=posix/spin/spin_unlock.o
+else ifeq ($(SPINLOCK_IMPL),none)
 else
 $(error SPINLOCK_IMPL was invalid. Valid options: posix.)
 endif
@@ -62,6 +65,7 @@ OBJ+=linux/futex/futex_cmp_xchng.o
 OBJ+=linux/futex/futex_wait.o
 OBJ+=linux/futex/futex_wait_timeout.o
 OBJ+=linux/futex/futex_wake.o
+else ifeq ($(FUTEX_IMPL),none)
 else
 $(error FUTEX_IMPL was invalid. Valid options: linux.)
 endif

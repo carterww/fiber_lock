@@ -34,19 +34,19 @@ COMPILE_ASSERTS=1
 # two if switching between the two as CC
 ATOMIC_OPERATIONS_IMPL=gcc
 
-# enum { posix }
+# enum { posix | none }
 # Mutex implementation
 MUTEX_IMPL=posix
 
-# enum { posix }
+# enum { posix | none }
 # Semaphore implementation
 SEMAPHORE_IMPL=posix
 
-# enum { posix }
+# enum { posix | none }
 # Spinlock implementation
 SPINLOCK_IMPL=posix
 
-# enum { linux }
+# enum { linux | none }
 # Futex implementation
 FUTEX_IMPL=linux
 
